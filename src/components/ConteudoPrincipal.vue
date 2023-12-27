@@ -28,7 +28,7 @@ export default {
 
       <ul v-if="ingredientes.length" class="ingredientes-sua-lista">
         <li v-for="ingrediente in ingredientes" :key="ingrediente">
-          <Tag :texto="ingrediente" />
+          <Tag :texto="ingrediente" ativa/>
         </li>
       </ul>
 
