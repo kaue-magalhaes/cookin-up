@@ -5,16 +5,20 @@ import SelecionarIngredientes from './SelecionarIngredientes.vue';
 export default {
   data() {
     return {
-      ingredientes: [
-        'Alho',
-        'Manteiga',
-        'Orégano',
-      ]
+      ingredientes: [] as string[]
     };
   },
   components: {
     SelecionarIngredientes,
     SuaLista
+  },
+  methods: {
+    adicionarIngrediente(ingrediente: string) {
+      this.ingredientes.push(ingrediente);
+    },
+    removerIngrediente(ingrediente: string) {
+      this.ingredientes = this.ingredientes.filter(item => item !== ingrediente);
+    }
   }
 }
 </script>
@@ -23,7 +27,10 @@ export default {
   <main class="conteudo-principal">
     <SuaLista :ingredientes="ingredientes" />
 
-    <SelecionarIngredientes />
+    <SelecionarIngredientes 
+      @adicionarIngrediente="adicionarIngrediente($event)"
+      @removerIngrediente="removerIngrediente($event)"
+    />
   </main>
 </template>
 
