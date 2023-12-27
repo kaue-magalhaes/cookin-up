@@ -1,12 +1,22 @@
 <script lang="ts">
 import { obterCategorias } from '@/http/index';
+import type ICategoria from '@/interfaces/ICategoria';
+import CardCategoria from './CardCategoria.vue';
 
 export default {
   data() {
     return {
-      categorias: obterCategorias()
-    }
-  }
+      categorias: [] as ICategoria[]
+    };
+  },
+  async created() {
+    this.categorias = await obterCategorias();
+  },
+  components: { CardCategoria },
+  emits: [
+    'adicionarIngrediente',
+    'removerIngrediente',
+  ]
 }
 </script>
 
@@ -21,7 +31,11 @@ export default {
 
     <ul class="categorias">
       <li v-for="categoria in categorias" :key="categoria.nome">
-        {{ categoria.nome }}
+        <CardCategoria 
+          :categoria="categoria"
+          @adicionarIngrediente="$emit('adicionarIngrediente', $event)"
+          @removerIngrediente="$emit('removerIngrediente', $event)"
+         />
       </li>
     </ul>
 
@@ -66,5 +80,4 @@ export default {
     margin-bottom: 2.5rem;
   }
 }
-
 </style>
